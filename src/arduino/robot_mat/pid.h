@@ -39,7 +39,7 @@ class PID {
      /**
      * 
      */
-    double compute();
+    double compute(double dt);
     /**
      * 
      */

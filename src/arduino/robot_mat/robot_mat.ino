@@ -12,6 +12,8 @@
 #include "Robot.h"
 #include "Ultrasonic.h"
 
+#include "network_connection.h"
+
 //Necessary for the timer function
 extern "C"
 {
@@ -21,15 +23,12 @@ extern "C"
 #define DEBUG 1
 
 
-//Network Configuration
-const char* ssid = "***";
-const char* password = "***";
 
 IPAddress server(192, 168, 1, 40); // ip of your ROS server
 
 const uint16_t serverPort = 11411;
 
-#define STOP_TIME_OUT 4 
+#define STOP_TIME_OUT 1000
 int stop_time_out_count = 0;
 
 //Timer configuration
@@ -55,6 +54,8 @@ geometry_msgs::Twist odom_geometry_msg;
 ros::Time current_time = nh.now();
 ros::Time last_time = current_time;
 
+long previousMillis = 0; 
+
 void setupWiFi() {
   WiFi.begin(ssid, password);
   Serial.print("\nConnecting to "); Serial.println(ssid);
@@ -74,7 +75,9 @@ void setupWiFi() {
  *
  */
 void timer_callback(void *pArg) {
-  robot.updateControlLoopLowLevel();
+  unsigned long currentMillis = millis();
+  robot.updateControlLoopLowLevel( (currentMillis-previousMillis) / 1000.0);
+  previousMillis = currentMillis;
 }
 
 /**
@@ -103,8 +106,8 @@ void setup() {
   os_timer_arm(&a_timer, timer_period, true);   // timer in ms
 
   //Attact the Interruptions 
-  attachInterrupt(digitalPinToInterrupt(14), update_wheel_1_position, RISING);        
-  attachInterrupt(digitalPinToInterrupt(12), update_wheel_2_position, RISING);        
+  attachInterrupt(digitalPinToInterrupt(12), update_wheel_1_position, RISING);        
+  attachInterrupt(digitalPinToInterrupt(14), update_wheel_2_position, RISING);        
   
   //Init rose node & subscribe
   nh.getHardware()->setConnection(server, serverPort);
@@ -207,9 +210,11 @@ void loop() {
  }
 
 void update_wheel_1_position() { 
+  //Serial.print("Right\n");           
   robot.updateEncoder(0);
 }
 
 void update_wheel_2_position() {
+  //Serial.print("Left\n");           
   robot.updateEncoder(1);
 }

@@ -31,7 +31,7 @@ class Motor {
      /**
      *
      */
-    void updateControlLoopLowLevel();
+    void updateControlLoopLowLevel(double dt);
     /**
      *
      */

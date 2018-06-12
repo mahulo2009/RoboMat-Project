@@ -20,10 +20,10 @@ double Ultrasonic::updateDistance()  {
   
   distance_ = duration * 10 / 292/ 2;
   
-  Serial.print("distance:");
-  Serial.print("\t");
-  Serial.print(distance_ );
-  Serial.print("\n");
+  //Serial.print("distance:");
+  //Serial.print("\t");
+  //Serial.print(distance_ );
+  //Serial.print("\n");
   
   return distance_; 
 }

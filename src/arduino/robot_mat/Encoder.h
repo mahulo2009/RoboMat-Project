@@ -19,7 +19,7 @@ class Encoder {
     /**
      * 
      */
-    void move(long velocity);
+    void move(double velocity);
      /**
      * 
      */
@@ -31,7 +31,7 @@ class Encoder {
      /**
      * 
      */
-    void updateControlLoop();
+    void updateControlLoop(double dt);
      /**
      * 
      */
@@ -115,7 +115,7 @@ class Encoder {
     /**
      * 
      */
-    void move_velocity_(long velocity);
+    void move_velocity_(double velocity);
     /**
      * 
      */

@@ -22,9 +22,9 @@ void Motor::stop()
   encoder_.stop();
 }
 
-void Motor::updateControlLoopLowLevel()
+void Motor::updateControlLoopLowLevel(double dt)
 {
-	encoder_.updateControlLoop();
+	encoder_.updateControlLoop(dt);
 }
 
 void Motor::updateControlLoopHighLevel()

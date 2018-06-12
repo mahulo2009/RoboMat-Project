@@ -38,8 +38,8 @@ void PID::setOutputLimits(double _min, double _max) {
    maxLimit = _max;
 }
 
-double PID::compute() {
-  long change = 250; //TODO This value is related to update frecuency.
+double PID::compute(double dt) {
+  
 
 
   double error = target - input;
@@ -48,7 +48,7 @@ double PID::compute() {
   ITotal = min(ITotal, maxLimit);
   ITotal = max(ITotal, minLimit);    
 
-  double dValue = kd * (error - prevError)/(change/1000.0);
+  double dValue = kd *  ( (error - prevError) / dt ); 
   
   /* do the full calculation */
   output = kp * error + ITotal + dValue;
@@ -62,6 +62,8 @@ double PID::compute() {
     
   /* debug some PID settings */
   /*
+  Serial.print("PID::compute()");
+  Serial.print("\t");
   Serial.print(target);
   Serial.print("\t");
   Serial.print(input);
@@ -74,7 +76,7 @@ double PID::compute() {
   Serial.print("\t");
   Serial.print(output);
   Serial.print("\n");
-*/ 
+  */ 
   return output;
 };
 

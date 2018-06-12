@@ -1,8 +1,8 @@
 #include "Robot.h"
 
 Robot::Robot() {
-	motor_[0] = new Motor(5,0,14);
-	motor_[1] = new Motor(4,2,12);
+	motor_[0] = new Motor(4,2,12);
+	motor_[1] = new Motor(5,0,14);
   ultrasonic = new Ultrasonic(16,15);
   x_=0;
   y_=0;
@@ -17,6 +17,7 @@ void Robot::move(double velocity_x, double velocity_theta)
 {
   double velocity_1  = ( velocity_x + velocity_theta * wheel_separation_) / ( wheel_radious_ ) ;
   double velocity_2  = ( velocity_x - velocity_theta * wheel_separation_) / ( wheel_radious_ ) ;
+  
 /*
   Serial.print("move velocity:");
   Serial.print("\t");
@@ -25,6 +26,7 @@ void Robot::move(double velocity_x, double velocity_theta)
   Serial.print(velocity_2);
   Serial.print("\n");
 */
+
   motor_[0]->move(velocity_1);
   motor_[1]->move(velocity_2);
 }
@@ -43,9 +45,9 @@ void Robot::updateEncoder(int number) {
   motor_[number]->updateEncoder();
 }
 
-void Robot::updateControlLoopLowLevel() {
+void Robot::updateControlLoopLowLevel(double dt) {
   for (int i=0;i<2;i++) {
-	  motor_[i]->updateControlLoopLowLevel();
+	  motor_[i]->updateControlLoopLowLevel(dt);
   }
 }
 

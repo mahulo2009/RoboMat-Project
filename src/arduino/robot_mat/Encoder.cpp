@@ -1,12 +1,13 @@
 #include "Encoder.h"
 
-Encoder::Encoder(int pin_power,int pin_direction,int pin_position) : pid_(0.1,0.9,0.2) 
+Encoder::Encoder(int pin_power,int pin_direction,int pin_position) : pid_(0.9,0.0,0.2) 
 {
   //Set teh parameters to the hardware GIOP.
   this->pin_power_=pin_power;
   this->pin_direction_=pin_direction;
   this->pin_position_=pin_position;
   this->direction_= 1;
+
   //Setup the PID max velocity
   pid_.setOutputLimits(0,max_tic_per_second_);
   this->is_stopped=true;
@@ -20,7 +21,7 @@ void Encoder::setup_()
   pinMode(pin_position_, INPUT_PULLUP);
 }
 
-void Encoder::move_velocity_(long velocity)
+void Encoder::move_velocity_(double velocity)
 {
   
   this->velocity_encoder_demanded_=velocity;
@@ -30,22 +31,23 @@ void Encoder::move_velocity_(long velocity)
 	  duty=0;
   if (duty>1023)
 	  duty=1023;
-
-  /*
-  Serial.print(velocity);
+/*
+  Serial.print("move move_velocity_:");
+  Serial.print("\t");
+  Serial.print(velocity_encoder_demanded_);
   Serial.print("\t");
   Serial.print(duty);
   Serial.print("\n");
-  */
+*/ 
     
   //Send to the hardware both duty and direcction
   analogWrite(pin_power_,duty); 
 }
 
-void Encoder::move(long velocity)
+void Encoder::move(double velocity)
 {
   this->is_stopped=false;
-  this->velocity_encoder_target_=abs(velocity);
+  this->velocity_encoder_target_=fabs(velocity);
   //Setup the PID target.
   pid_.setTarget(velocity_encoder_target_); 
 
@@ -58,7 +60,7 @@ void Encoder::move(long velocity)
     this->direction_= -1;
   } 
   //Move
-  move_velocity_(velocity_encoder_target_); 
+  //move_velocity_(velocity_encoder_target_); 
 }   
 
 void Encoder::stop() 
@@ -78,27 +80,34 @@ void Encoder::updateEncoder()
 */
 }
 
-void Encoder::updateControlLoop() 
+void Encoder::updateControlLoop(double dt) 
 {
   if (!this->is_stopped)
   {
-    this->velocity_encoder_current_ =  (encoder_ - previous_encoder_);
+
+    
+    this->velocity_encoder_current_ =  (encoder_ - previous_encoder_) / dt;
     this->previous_encoder_=encoder_;     
     
-   /*
-    
-    Serial.print(velocity_encoder_target_);
+    /*
+    Serial.print("updateControlLoop:");
     Serial.print("\t");
-    Serial.print(velocity_encoder_current_);
-    Serial.print("\t");
-    Serial.print(velocity_encoder_demanded_);
-    Serial.print("\n");
-  */
+    */
+    if ( pin_power_ == 4 ) {      
+      Serial.print(dt);
+      Serial.print("\t");
+      Serial.print(velocity_encoder_target_);
+      Serial.print("\t");
+      Serial.print(velocity_encoder_current_);
+      Serial.print("\t");
+      Serial.print(velocity_encoder_demanded_);
+      Serial.print("\n");    
+    }
   
     //Update the current velocity.
     pid_.setInput(this->velocity_encoder_current_);
     //Update the demanded velocity.
-    this->velocity_encoder_demanded_ = pid_.compute();
+    this->velocity_encoder_demanded_ = pid_.compute(dt);
     //Move demanded.
     move_velocity_(velocity_encoder_demanded_);
   }

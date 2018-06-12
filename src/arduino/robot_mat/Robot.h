@@ -27,7 +27,7 @@ class Robot {
     /**
      *
      */
-    void updateControlLoopLowLevel();
+    void updateControlLoopLowLevel(double dt);
     /**
      * 
      */
