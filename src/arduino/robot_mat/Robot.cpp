@@ -96,4 +96,8 @@ double Robot::getDistance()
    return ultrasonic->distance()/100; 
 }
 
+double Robot::moveUltraSonic(double pos) {
+  ultrasonic->move(pos);
+}
+
 

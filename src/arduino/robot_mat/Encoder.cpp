@@ -1,15 +1,16 @@
 #include "Encoder.h"
 
-Encoder::Encoder(int pin_power,int pin_direction,int pin_position) : pid_(0.9,0.0,0.2) 
+Encoder::Encoder(int pin_power,int pin_direction,int pin_position) : pid_(0.5,0.1,0.0) 
 {
   //Set teh parameters to the hardware GIOP.
   this->pin_power_=pin_power;
   this->pin_direction_=pin_direction;
   this->pin_position_=pin_position;
   this->direction_= 1;
+  this->duty_=0;
 
   //Setup the PID max velocity
-  pid_.setOutputLimits(0,max_tic_per_second_);
+  pid_.setOutputLimits(-max_tic_per_second_,max_tic_per_second_);
   this->is_stopped=true;
   setup_();
 }
@@ -26,22 +27,22 @@ void Encoder::move_velocity_(double velocity)
   
   this->velocity_encoder_demanded_=velocity;
   //Convert from velocity to duty
-  long duty = abs(ceil(velocity_encoder_demanded_*power_by_velocity_factor_));
-  if (duty<0)
-	  duty=0;
-  if (duty>1023)
-	  duty=1023;
+  this->duty_ = this->duty_ + ceil(velocity_encoder_demanded_*power_by_velocity_factor_);
+  if (this->duty_<0)
+	  this->duty_=0;
+  if (this->duty_>1023)
+	  this->duty_=1023;
 /*
   Serial.print("move move_velocity_:");
   Serial.print("\t");
   Serial.print(velocity_encoder_demanded_);
   Serial.print("\t");
-  Serial.print(duty);
+  Serial.print(this->duty_);
   Serial.print("\n");
-*/ 
+*/
     
   //Send to the hardware both duty and direcction
-  analogWrite(pin_power_,duty); 
+  analogWrite(pin_power_,this->duty_); 
 }
 
 void Encoder::move(double velocity)

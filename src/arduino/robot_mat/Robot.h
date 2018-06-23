@@ -65,6 +65,11 @@ class Robot {
      */
     double getDistance();
 
+    /*
+     * 
+     */
+    double moveUltraSonic(double pos);
+
   private:
     /**
      * 

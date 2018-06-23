@@ -6,6 +6,9 @@ Ultrasonic::Ultrasonic(int pin_trigger,int pin_echo):
     
   pinMode(pin_trigger, OUTPUT);
   pinMode(pin_echo, INPUT);
+
+  servoMotor_.attach(13);
+  
 }
 
 
@@ -26,5 +29,9 @@ double Ultrasonic::updateDistance()  {
   //Serial.print("\n");
   
   return distance_; 
+}
+
+void Ultrasonic::move(double pos) { 
+  servoMotor_.write(pos);  
 }
 

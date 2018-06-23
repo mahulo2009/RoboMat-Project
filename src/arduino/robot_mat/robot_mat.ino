@@ -56,6 +56,11 @@ ros::Time last_time = current_time;
 
 long previousMillis = 0; 
 
+
+
+
+
+
 void setupWiFi() {
   WiFi.begin(ssid, password);
   Serial.print("\nConnecting to "); Serial.println(ssid);
@@ -128,9 +133,14 @@ void setup() {
   ultrasonic_msg.max_range = 20;
 }
 
+int pos_index = 0; 
+int pos [] =  {0,30,60,90,120,150,180,150,120,90,60,30};
+
+#define SCAN_PERIOD 10
+int scan_count = 0;
+
 void loop() {
   //if (nh.connected()) {
-
     robot.updateDistance();
 
     current_time = nh.now();
@@ -142,8 +152,7 @@ void loop() {
 
     //TODO REVIEW THIS THE ANGLE IS NOT CORRECT
     geometry_msgs::Quaternion odom_quat = tf::createQuaternionFromYaw(robot.getTheta());
-
-    
+   
     // tf odom->base_link
     odom_trans.header.stamp = current_time;
     odom_trans.header.frame_id = "/odom";
@@ -180,12 +189,12 @@ void loop() {
 
 
     //BEGIN Ultrasonic
-      ultrasonic_trans.header.frame_id = "/base_link";
+    ultrasonic_trans.header.frame_id = "/base_link";
     ultrasonic_trans.child_frame_id = "/ultrasound";
     ultrasonic_trans.transform.translation.x = 0.0; 
     ultrasonic_trans.transform.translation.y = 0.0; 
     ultrasonic_trans.transform.translation.z = 0.0;
-    ultrasonic_trans.transform.rotation = tf::createQuaternionFromYaw(0.0); //TODO INCLUDE ORIENTATION + RELATIVE POSITION SENSOR.
+    ultrasonic_trans.transform.rotation = tf::createQuaternionFromYaw((pos[pos_index]-90)*(PI/180.0)); //TODO INCLUDE ORIENTATION + RELATIVE POSITION SENSOR.
     ultrasonic_trans.header.stamp = current_time;
     broadcaster.sendTransform(ultrasonic_trans);
 
@@ -204,6 +213,14 @@ void loop() {
     {
       stop_time_out_count=0;
       robot.stop();           
+    }
+
+    if (scan_count++ == SCAN_PERIOD ) 
+    {
+      scan_count=0;
+      pos_index++;
+      if (pos_index>11) pos_index =0;
+      robot.moveUltraSonic(pos[pos_index]);              
     }
     
   //} 

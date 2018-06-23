@@ -50,6 +50,7 @@ class Encoder {
     long getEncoderVelocityCurrent();
     
   private:
+    long duty_;
     /**
      * 
      */

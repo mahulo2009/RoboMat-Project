@@ -2,6 +2,7 @@
 #define Ultrasonic_H
 
 #include <ESP8266WiFi.h>
+#include <Servo.h>
 
 /**
  * 
@@ -24,7 +25,15 @@ class Ultrasonic {
       return distance_;
     }
 
+    void move(double pos);
+
   private:
+  
+    /**
+     * 
+     */
+    Servo servoMotor_;
+  
     /**
      * 
      */
