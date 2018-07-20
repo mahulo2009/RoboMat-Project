@@ -5,11 +5,17 @@
 #include <tf/transform_broadcaster.h>
 #include <nav_msgs/Odometry.h>
 #include <geometry_msgs/Twist.h>
+#include <sensor_msgs/Range.h>
 #include "network_connection.h"
 #include <DifferentialWheeledRobot.h>
 #include <Pid.h>
 #include <Encoder.h>
 #include <WheelEncoder.h>
+#include <Sonar.h>
+
+#define PIN_SONAR_TRIGGER 16
+#define PIN_SONAR_ECHO 15
+
 
 IPAddress server(192, 168, 1, 40); // IP address of the ROS server
 const uint16_t serverPort = 11411; // Port of the ROS serial server
@@ -45,8 +51,12 @@ ros::Subscriber<geometry_msgs::Twist> cmd_vel_sub("/car/cmd_vel", &cmd_velCallba
 nav_msgs::Odometry odom_nav_msg;              
 ros::Publisher odom_pub("/car/odom", &odom_nav_msg); 
 
+sensor_msgs::Range ultrasonic_msg;   
+ros::Publisher pub_ultrasonic("/car/ultrasound", &ultrasonic_msg);      
+
 tf::TransformBroadcaster broadcaster;
 geometry_msgs::TransformStamped odom_trans;
+geometry_msgs::TransformStamped ultrasonic_trans;   
 geometry_msgs::Twist odom_geometry_msg;
 
 ros::Time current_time = nh.now();
@@ -65,7 +75,15 @@ void setup() {
   broadcaster.init(nh);
   nh.subscribe(cmd_vel_sub);
   nh.advertise(odom_pub);
-   
+  nh.advertise(pub_ultrasonic);
+
+  //Configure ultrasonic
+  ultrasonic_msg.radiation_type = sensor_msgs::Range::ULTRASOUND;
+  ultrasonic_msg.header.frame_id = "/ultrasound";   
+  ultrasonic_msg.field_of_view = 0.1;
+  ultrasonic_msg.min_range = 0.0;
+  ultrasonic_msg.max_range = 20;
+
   while(!nh.connected()) {nh.spinOnce();}
 
   float pid_kp, pid_ki, pid_kd;
@@ -152,10 +170,16 @@ void setup() {
   wheel_right->attachEncoder(encoder_right);
   wheel_right->attachPid(pid_right);
 
+  //Sonar 
+  Sonar * sonar = new Sonar();
+  sonar->attachTrigger(PIN_SONAR_TRIGGER);
+  sonar->attachEcho(PIN_SONAR_ECHO);
+
   //Robot
   robot = new DifferentialWheeledRobot(robot_wheel_separation,robot_wheel_radious);
   robot->attachLeftWheel(wheel_left); 
   robot->attachRightWheel(wheel_right); 
+  robot->attachSonar(sonar);
   
 }
 
@@ -194,11 +218,27 @@ void loop() {
     odom_pub.publish(&odom_nav_msg);
     //END odometry  
 
+    //BEGIN Ultrasonic
+    ultrasonic_trans.header.frame_id = "/base_link";
+    ultrasonic_trans.child_frame_id = "/ultrasound";
+    ultrasonic_trans.transform.translation.x = 0.0; 
+    ultrasonic_trans.transform.translation.y = 0.0; 
+    ultrasonic_trans.transform.translation.z = 0.0;
+    ultrasonic_trans.transform.rotation = tf::createQuaternionFromYaw(0.0); //TODO INCLUDE ORIENTATION + RELATIVE POSITION SENSOR.
+    ultrasonic_trans.header.stamp = current_time;
+    broadcaster.sendTransform(ultrasonic_trans);
+
+    ultrasonic_msg.range = robot->getDistance(0);
+    ultrasonic_msg.header.stamp = current_time;
+    pub_ultrasonic.publish(&ultrasonic_msg);    
+    //END Ultrasonic
+
     last_time = current_time;
 
     //Ros spin once
     nh.spinOnce(); 
     //Delay
-    delay(250);  
+    delay(500);  
   } 
 }
+
