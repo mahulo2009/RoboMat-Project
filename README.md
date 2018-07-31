@@ -22,4 +22,31 @@ D6 | 12 | Encoder Motor Left
 D7 | 13 | Servo
 D8 | 15 | Untrasonic Echo
 
+## Components
+
+## Chassis
+
+### Battery
+
+### Single Board Computer
+
+### Motor
+
+### Wheel
+
+### Caster
+
+### Encoder
+
+### Encoder Filter
+
+### Servo
+
+### Ultrasonic
+
+
+
+
+
+
 
