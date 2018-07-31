@@ -33,7 +33,7 @@ D8 | 15 | Untrasonic Echo
 ### Motor
 
 
-  |
+Characteristic  | Value
 ------------ | -------------
 Operating voltage | 3V ~ 6V DC ( recommended  5V )
 Maximum torque | 800g.cm
