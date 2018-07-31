@@ -32,6 +32,17 @@ D8 | 15 | Untrasonic Echo
 
 ### Motor
 
+
+  |
+------------ | -------------
+Operating voltage | 3V ~ 6V DC ( recommended  5V )
+Maximum torque | 800g.cm
+Speed without load | 90±10rpm
+Reduction ratio | 1:48
+No Load current | 190mA ( maximum 250mA)
+Stall Current | ~1A
+
+
 ### Wheel
 
 ### Caster
