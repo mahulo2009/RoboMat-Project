@@ -29,13 +29,23 @@ D8 | 15 | Untrasonic Echo
 
 ### Single Board Computer
 
-ESP8266
+NodeMCU board base on ESP8266
+
+<img src="images/Board.png" width="50%"/>
 
 Characteristic  | Value
 ------------ | -------------
+
+Processor |  Tensilica L106 32-bit
+Processor Frecuency | 80MHz
+Memory SRAM user |  50kB
+Memory Flash | 16Mbytes
+Wifi | 802.11 b/g/n/e/i
+GPIO | 17 GPIO
 Operating Voltage | 3.0V ~ 3.6V
 Operating Current | Average Value: 80mA
-
+Output Voltage pins | 3.3V
+Current nominal pins | 12mA
 
 ### Motor
 
