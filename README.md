@@ -1,10 +1,11 @@
 [image1]: ./images/RobotGeneral.png
+[image2]: ./images/yellow-gear-motor.jpg
 
 # RoboMat-Project
 
 ## Introduction
 
-![alt text][image1]
+![alt text][image1 =250x]
 
 
 ## Pinout
@@ -28,10 +29,13 @@ D8 | 15 | Untrasonic Echo
 
 ### Battery
 
+
+
 ### Single Board Computer
 
 ### Motor
 
+![alt text][image2]
 
 Characteristic  | Value
 ------------ | -------------
@@ -41,7 +45,6 @@ Speed without load | 90±10rpm
 Reduction ratio | 1:48
 No Load current | 190mA ( maximum 250mA)
 Stall Current | ~1A
-
 
 ### Wheel
 
