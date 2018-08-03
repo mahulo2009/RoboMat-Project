@@ -5,7 +5,7 @@
 
 ## Introduction
 
-![alt text][image1 =250x]
+![alt text][image1] { width: 200px; }
 
 
 ## Pinout
@@ -35,7 +35,7 @@ D8 | 15 | Untrasonic Echo
 
 ### Motor
 
-![alt text][image2]
+![alt text][image2] { width: 50px; }
 
 Characteristic  | Value
 ------------ | -------------
