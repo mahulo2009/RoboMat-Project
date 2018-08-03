@@ -1,12 +1,8 @@
-[image1]: ./images/RobotGeneral.png
-[image2]: ./images/yellow-gear-motor.jpg
-
 # RoboMat-Project
 
 ## Introduction
 
-![alt text][image1] { width: 200px; }
-
+<img src="images/RobotGeneral.png" width="50%"/>
 
 ## Pinout
 
@@ -29,13 +25,21 @@ D8 | 15 | Untrasonic Echo
 
 ### Battery
 
-
+4 x alkaline battery : 1.5V & 1700-2800mA
 
 ### Single Board Computer
 
+ESP8266
+
+Characteristic  | Value
+------------ | -------------
+Operating Voltage | 3.0V ~ 3.6V
+Operating Current | Average Value: 80mA
+
+
 ### Motor
 
-![alt text][image2] { width: 50px; }
+<img src="./images/yellow-gear-motor.jpg" width="25%"/>
 
 Characteristic  | Value
 ------------ | -------------
