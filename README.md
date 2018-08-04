@@ -61,6 +61,23 @@ Drive type | Dual high-power H-bridge driver
 
 ### Encoder
 
+#### Optical Endstop Switch
+
+<img src="./images/EndStopOptical.png" width="25%"/>
+
+Characteristic  | Value
+------------ | -------------
+Power supply | 5V
+Sensor Type | TCST2103
+
+#### Encoder Disk
+
+<img src="./images/EncoderDisk.png" width="25%"/>
+
+Characteristic  | Value
+------------ | -------------
+Number Slit | 20
+
 ### Encoder Filter
 
 ### Servo
