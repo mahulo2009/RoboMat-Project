@@ -35,7 +35,6 @@ NodeMCU board base on ESP8266
 
 Characteristic  | Value
 ------------ | -------------
-
 Processor |  Tensilica L106 32-bit
 Processor Frecuency | 80MHz
 Memory SRAM user |  50kB
