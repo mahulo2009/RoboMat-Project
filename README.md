@@ -56,7 +56,7 @@ Reduction ratio | 1:48
 
 ES 3154
 
-<img src="./images/Servo" width="25%"/>
+<img src="./images/Servo.png" width="25%"/>
 
 Characteristic  | Value
 ------------ | -------------
@@ -66,7 +66,7 @@ Operating voltage | 4.8V ~ 6V DC
 
 HC-SR04
 
-<img src="./images/Ultrasonic" width="25%"/>
+<img src="./images/Ultrasonic.png" width="25%"/>
 
 Characteristic  | Value
 ------------ | -------------
