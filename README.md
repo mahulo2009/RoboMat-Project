@@ -44,6 +44,17 @@ Maximum torque | 800g.cm
 Speed without load | 90±10rpm
 Reduction ratio | 1:48
 
+### Motor Drive
+
+<img src="./images/MotorDrive.png" width="25%"/>
+
+Characteristic  | Value
+------------ | -------------
+Motor power supply | 4.5V ~ 36V
+Motor control power | 4.5V ~ 9V
+Drive type | Dual high-power H-bridge driver
+
+
 ### Wheel
 
 ### Caster
