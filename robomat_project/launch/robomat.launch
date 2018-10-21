@@ -11,8 +11,11 @@
 	<param name="/robomat/encoder_ticks_per_revoloution" type="int" value="21" />	
 	<param name="/robomat/robot_wheel_separation" type="double" value="0.135" />	
 	<param name="/robomat/robot_wheel_radious" type="double" value="0.0325" />	
-	<param name="/robomat/pid_kp" type="double" value="0.8" />	
-	<param name="/robomat/pid_ki" type="double" value="0.5" />	
+	<param name="/robomat/pid_kp" type="double" value="0.6" />	
+	<param name="/robomat/pid_ki" type="double" value="2.0" />	
 	<param name="/robomat/pid_kd" type="double" value="0.0" />	
+
+	<include file="$(find rosbridge_server)/launch/rosbridge_websocket.launch"/> 
+
 </launch>
 
