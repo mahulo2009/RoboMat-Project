@@ -1,4 +1,7 @@
+
 <launch>
+
+	<param name="/robomat/robot_type" type="int" value="1" />	
 	<param name="/robomat/max_speed" type="double" value="26.85" />	
 	<param name="/robomat/power_min" type="int" value="0" />	
 	<param name="/robomat/power_max" type="int" value="1023" />	
@@ -12,8 +15,12 @@
 	<param name="/robomat/robot_wheel_separation" type="double" value="0.135" />	
 	<param name="/robomat/robot_wheel_radious" type="double" value="0.0325" />	
 	<param name="/robomat/pid_kp" type="double" value="0.6" />	
-	<param name="/robomat/pid_ki" type="double" value="2.0" />	
+	<param name="/robomat/pid_ki" type="double" value="1.5" />	
 	<param name="/robomat/pid_kd" type="double" value="0.0" />	
+	<param name="/robomat/pin_sonar_trigger" type="int" value="16" />
+	<param name="/robomat/pin_sonar_echo" type="int" value="15" />
+	<param name="/robomat/pin_servo" type="int" value="13" />				
+
 
 	<include file="$(find rosbridge_server)/launch/rosbridge_websocket.launch"/> 
 
