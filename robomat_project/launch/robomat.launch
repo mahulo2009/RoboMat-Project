@@ -14,8 +14,8 @@
 	<param name="/robomat/encoder_ticks_per_revoloution" type="int" value="21" />	
 	<param name="/robomat/robot_wheel_separation" type="double" value="0.135" />	
 	<param name="/robomat/robot_wheel_radious" type="double" value="0.0325" />	
-	<param name="/robomat/pid_kp" type="double" value="0.6" />	
-	<param name="/robomat/pid_ki" type="double" value="1.5" />	
+	<param name="/robomat/pid_kp" type="double" value="0.10980999999999999" />	
+	<param name="/robomat/pid_ki" type="double" value="0.48697955417886274" />	
 	<param name="/robomat/pid_kd" type="double" value="0.0" />	
 	<param name="/robomat/pin_sonar_trigger" type="int" value="16" />
 	<param name="/robomat/pin_sonar_echo" type="int" value="15" />
